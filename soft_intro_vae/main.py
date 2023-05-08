@@ -5,7 +5,8 @@ Author: Tal Daniel
 # imports
 import torch
 import argparse
-from train_soft_intro_vae import train_soft_intro_vae
+# from train_soft_intro_vae import train_soft_intro_vae
+from train_soft_intro_vae_color import train_soft_intro_vae
 
 if __name__ == "__main__":
     """

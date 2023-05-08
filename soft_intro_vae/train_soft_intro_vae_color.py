@@ -222,7 +222,7 @@ class SoftIntroVAE(nn.Module):
             y = self.decoder(z)
         return y
 
-class ColorDataset(Dataset):
+class ColorDataset(Dataset):  # !!!
     def __init__(self, file_path, transform=None):
         self.data = np.load(file_path)
         self.transform = transform
@@ -394,11 +394,11 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
         ch = 3
     
     elif dataset == 'color': # !!!
-        data_path = 'D:/Datasets/trn_color.npy'
+        data_path = '"D:/GitHub/T2I-Adapter/preprocessed_outputs/val_stim_multi_trial_data-color.npy"'
         # channels = [64, 128, 256] # 您可以根据实际情况调整这些参数
         # channels = [32, 64, 128, 256, 512, 512]
-        channels = (64, 128, 256, 512, 512, 512)
-        image_size = 256 # 假设您的Color数据集中的图像尺寸为32x32，根据实际情况修改
+        channels = [16, 32, 64, 128, 256, 512, 512, 512]
+        image_size = 512 # 假设您的Color数据集中的图像尺寸为32x32，根据实际情况修改
         ch = 3 # 假设您的数据集是彩色的，即有3个通道
         train_set = ColorDataset(file_path=data_path, transform=transforms.ToTensor())
     
