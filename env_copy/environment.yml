@@ -1,4 +1,4 @@
-name: torch
+name: SoftIntroVAE
 channels:
   - pytorch
   - conda-forge
@@ -118,4 +118,3 @@ dependencies:
     - kornia==0.4.1
     - protobuf==3.14.0
     - tensorboardx==2.1
-
