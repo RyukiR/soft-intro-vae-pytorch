@@ -361,7 +361,7 @@ Train Functions
 
 def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, batch_size=128, num_workers=4,
                          start_epoch=0, exit_on_negative_diff=False,
-                         num_epochs=250, num_vae=0, save_interval=50, recon_loss_type="mse",
+                         num_epochs=250, num_vae=0, save_interval=5, recon_loss_type="mse",
                          beta_kl=1.0, beta_rec=1.0, beta_neg=1.0, test_iter=1000, seed=-1, pretrained=None,
                          device=torch.device("cpu"), num_row=8, gamma_r=1e-8, with_fid=False):
     """
@@ -405,10 +405,10 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
         ch = 3
     
     elif dataset == 'color': # !!!
-        data_path = "D:\\GitHub\\soft-intro-vae-pytorch\\soft_intro_vae\\data_preprocessor\\trn_stim_data-color.npy"
+        data_path = "../../A_Dataset/trn_stim_data-color.npy"
         # channels = [64, 128, 256] # 您可以根据实际情况调整这些参数
         # channels = [32, 64, 128, 256, 512, 512]
-        channels = [64, 128, 256, 512, 512, 512]
+        channels = [16, 32, 64, 128, 256, 512, 512, 512]
         image_size = 512 # 假设您的Color数据集中的图像尺寸为32x32，根据实际情况修改
         ch = 3 # 假设您的数据集是彩色的，即有3个通道
         train_set = ColorDataset(file_path=data_path, transform=transforms.ToTensor())
@@ -658,7 +658,7 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
                 lossD.backward()
                 optimizer_d.step()
                 if torch.isnan(lossD) or torch.isnan(lossE):
-                    raise SystemError
+                    raise SystemError  ### !!!
 
                 dif_kl = -lossE_real_kl.data.cpu() + lossD_fake_kl.data.cpu()
                 pbar.set_description_str('epoch #{}'.format(epoch))
@@ -678,7 +678,7 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
                     max_imgs = min(batch.size(0), 16)
                     vutils.save_image(
                         torch.cat([real_batch[:max_imgs], rec_det[:max_imgs], fake[:max_imgs]], dim=0).data.cpu(),
-                        '{}/image_{}.jpg'.format(fig_dir, cur_iter), nrow=num_row)
+                        '{}/image_{}.jpg'.format(fig_dir, cur_iter), nrow=max_imgs)
 
             cur_iter += 1
         e_scheduler.step()
