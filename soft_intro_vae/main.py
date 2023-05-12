@@ -48,6 +48,6 @@ if __name__ == "__main__":
     train_soft_intro_vae(dataset=args.dataset, z_dim=args.z_dim, batch_size=args.batch_size, num_workers=0,
                          num_epochs=args.num_epochs,
                          num_vae=args.num_vae, beta_kl=args.beta_kl, beta_neg=args.beta_neg, beta_rec=args.beta_rec,
-                         device=device, save_interval=50, start_epoch=0, lr_e=args.lr, lr_d=args.lr,
+                         device=device, save_interval=4, start_epoch=0, lr_e=args.lr, lr_d=args.lr,
                          pretrained=pretrained, seed=args.seed,
                          test_iter=1000, with_fid=args.fid)

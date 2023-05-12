@@ -247,6 +247,19 @@ class ColorDataset(Dataset):  # !!!
         # print("Size of a single sample after transformation:", sample.shape)  # Print the size of sample after transformation
         return sample
 
+class SketchDataset(Dataset):  # !!!
+    def __init__(self, file_path, transform=None):
+        self.data = np.load(file_path)
+        self.transform = transform
+        
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        sample = self.data[idx]
+        if self.transform:
+            sample = self.transform(sample)
+        return sample
 
 """
 Helpers
@@ -403,15 +416,22 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
         channels = [64, 128, 256]
         train_set = CIFAR10(root='./cifar10_ds', train=True, download=True, transform=transforms.ToTensor())
         ch = 3
-    
+     
     elif dataset == 'color': # !!!
-        data_path = "../../A_Dataset/trn_stim_data-color.npy"
+        data_path = "../../Dataset/trn_stim_data-color.npy"
         # channels = [64, 128, 256] # 您可以根据实际情况调整这些参数
         # channels = [32, 64, 128, 256, 512, 512]
         channels = [16, 32, 64, 128, 256, 512, 512, 512]
         image_size = 512 # 假设您的Color数据集中的图像尺寸为32x32，根据实际情况修改
         ch = 3 # 假设您的数据集是彩色的，即有3个通道
         train_set = ColorDataset(file_path=data_path, transform=transforms.ToTensor())
+        
+    elif dataset == 'sketch':
+        data_path = "../../Dataset/trn_stim_data-sketch.npy"
+        channels = [16, 32, 64, 128, 256, 512, 512, 512]
+        image_size = 512
+        ch = 1
+        train_set = SketchDataset(file_path=data_path, transform=transforms.ToTensor())
     
     elif dataset == 'celeb128':
         channels = [64, 128, 256, 512, 512]
