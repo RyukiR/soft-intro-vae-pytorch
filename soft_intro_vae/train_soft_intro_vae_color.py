@@ -226,25 +226,25 @@ class ColorDataset(Dataset):  # !!!
     def __init__(self, file_path, transform=None):
         self.data = np.load(file_path)
         self.transform = transform
-        # print("Size of the entire dataset:", self.data.shape)  # Print the size of self.data
+        print("Size of the entire dataset:", self.data.shape)  # Print the size of self.data
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        # sample = self.data[idx]
-        sample = np.squeeze(self.data[idx])  # Remove singleton dimensions
-        # print("Size of a single sample before transformation:", sample.shape)  # Print the size of sample before transformation
+        sample = self.data[idx]
+        # sample = np.squeeze(self.data[idx])  # Remove singleton dimensions
+        print("Size of a single sample before transformation:", sample.shape)  # Print the size of sample before transformation
         
-        # if isinstance(sample, torch.Tensor):
-        #     print("Data is a tensor")
-        # else:
-        #     print("Data is not a tensor")
-        #     sample = self.transform(sample)
+        if isinstance(sample, torch.Tensor):
+            print("Data is a tensor")
+        else:
+            print("Data is not a tensor")
+            sample = self.transform(sample)
             
         # if self.transform:
         #     sample = self.transform(sample)
-        # print("Size of a single sample after transformation:", sample.shape)  # Print the size of sample after transformation
+        print("Size of a single sample after transformation:", sample.shape)  # Print the size of sample after transformation
         return sample
 
 
@@ -405,7 +405,7 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
         ch = 3
     
     elif dataset == 'color': # !!!
-        data_path = "D:\\GitHub\\T2I-Adapter\\preprocessed_outputs\\val_stim_multi_trial_data-color.npy"
+        data_path = "D:\\GitHub\\soft-intro-vae-pytorch\\soft_intro_vae\\data_preprocessor\\trn_stim_data-color.npy"
         # channels = [64, 128, 256] # 您可以根据实际情况调整这些参数
         # channels = [32, 64, 128, 256, 512, 512]
         channels = [64, 128, 256, 512, 512]
