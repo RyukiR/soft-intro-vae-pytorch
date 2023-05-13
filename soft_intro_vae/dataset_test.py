@@ -9,4 +9,4 @@ def print_dataset(file_path, n=10):  # Print the first n items
         print(data[i])
 
 # Replace 'your_file_path.npy' with the actual path to your file
-print_dataset('D:\\GitHub\\soft-intro-vae-pytorch\\soft_intro_vae\\data_preprocessor\\trn_stim_data-sketch.npy', 10)
+print_dataset('../Dataset/trn_stim_data-sketch-256.npy', 10)

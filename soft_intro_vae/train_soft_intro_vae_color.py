@@ -419,17 +419,17 @@ def train_soft_intro_vae(dataset='cifar10', z_dim=128, lr_e=2e-4, lr_d=2e-4, bat
      
     elif dataset == 'color': # !!!
         data_path = "../../Dataset/trn_stim_data-color.npy"
-        # channels = [64, 128, 256] # 您可以根据实际情况调整这些参数
+        # channels = [64, 128, 256]
         # channels = [32, 64, 128, 256, 512, 512]
         channels = [16, 32, 64, 128, 256, 512, 512, 512]
-        image_size = 512 # 假设您的Color数据集中的图像尺寸为32x32，根据实际情况修改
-        ch = 3 # 假设您的数据集是彩色的，即有3个通道
+        image_size = 256
+        ch = 3
         train_set = ColorDataset(file_path=data_path, transform=transforms.ToTensor())
         
-    elif dataset == 'sketch':
+    elif dataset == 'sketch': # !!!
         data_path = "../../Dataset/trn_stim_data-sketch.npy"
         channels = [16, 32, 64, 128, 256, 512, 512, 512]
-        image_size = 512
+        image_size = 256
         ch = 1
         train_set = SketchDataset(file_path=data_path, transform=transforms.ToTensor())
     
